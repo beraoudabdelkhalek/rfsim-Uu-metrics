@@ -125,7 +125,11 @@ void rxAddInput(const c16_t *input_sig,
   // so, in actual RF: tx gain + path loss + rx gain (+antenna gain, ...)
   // UE and NB gain control to be added
   // Fixme: not sure when it is "volts" so dB is 20*log10(...) or "power", so dB is 10*log10(...)
-  const double pathLossLinear = pow(10,channelDesc->path_loss_dB/20.0);
+  // const double pathLossLinear = pow(10, -channelDesc->path_loss_dB/20.0);
+  // const double pathLossLinear = pow(10, channelDesc->path_loss_dB/20.0);
+    //  const double pathLossLinear = channelDesc->path_loss_dB;
+  // const double pathLossLinear = 12 - ( ( channelDesc->path_loss_dB - 30 ) / 110 ) * 11.9;
+  const double pathLossLinear = 4 * exp(-0.04352 * (channelDesc->path_loss_dB - 30)); // map pathloss values from [140 - 30], to range [0.1 - 4] 
   // Energy in one sample to calibrate input noise
   // the normalized OAI value seems to be 256 as average amplitude (numerical amplification = 1)
   const double noise_per_sample = add_noise ? pow(10,channelDesc->noise_power_dB/10.0) * 256 : 0;
@@ -152,6 +156,8 @@ void rxAddInput(const c16_t *input_sig,
         const struct complex16 tx16 = input_sig[idx];
         rx_tmp.r += tx16.r * channelModel[l].r - tx16.i * channelModel[l].i;
         rx_tmp.i += tx16.i * channelModel[l].r + tx16.r * channelModel[l].i;
+        //  rx_tmp.r += tx16.r;
+        // rx_tmp.i += tx16.i;
       } //l
     }
 
@@ -167,8 +173,12 @@ void rxAddInput(const c16_t *input_sig,
       channelDesc->Doppler_phase_cur[rxAnt] += channelDesc->Doppler_phase_inc;
     }
 
+
+    // LOG_I(PHY, "pathLossLinear : %f \n", pathLossLinear);
     out_ptr->r += rx_tmp.r * pathLossLinear + noise_per_sample * gaussZiggurat(0.0, 1.0);
     out_ptr->i += rx_tmp.i * pathLossLinear + noise_per_sample * gaussZiggurat(0.0, 1.0);
+    // out_ptr->r += rx_tmp.r*2.2;
+    // out_ptr->i += rx_tmp.i;
     out_ptr++;
   }
 
@@ -179,5 +189,6 @@ void rxAddInput(const c16_t *input_sig,
           10*log10((double)signal_energy((int32_t *)after_channel_sig, nbSamples)),
           channelDesc->path_loss_dB,
           10*log10(noise_per_sample));
+          
 }
 

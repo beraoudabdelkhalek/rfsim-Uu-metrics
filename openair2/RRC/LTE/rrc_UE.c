@@ -6603,7 +6603,7 @@ void process_nr_nsa_msg(nsa_msg_t *msg, int msg_len)
                 nfapi_nr_dl_tti_request_pdu_t *pdu_list = &dl_tti_request.dl_tti_request_body.dl_tti_pdu_list[i];
                 if (pdu_list->PDUType == NFAPI_NR_DL_TTI_SSB_PDU_TYPE)
                 {
-                    LOG_I(RRC, "Got an NR_UE_RRC_MEASUREMENT. pdulist[%d].ssbRsrp = %d\n",
+                    LOG_I(RRC, "Got an NR_UE_RRC_MEASUREMENT. pdulist[%d].ssb[UE]\n",
                          i, pdu_list->ssb_pdu.ssb_pdu_rel15.ssbRsrp);
                 }
             }

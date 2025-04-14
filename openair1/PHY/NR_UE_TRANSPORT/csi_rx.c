@@ -241,8 +241,16 @@ static int nr_get_csi_rs_signal(const PHY_VARS_NR_UE *ue,
 
 
   *rsrp = rsrp_sum/meas_count;
-  *rsrp_dBm = dB_fixed(*rsrp) + 30 - SQ15_SQUARED_NORM_FACTOR_DB
-      - ((int)openair0_cfg[0].rx_gain[0] - (int)openair0_cfg[0].rx_gain_offset[0]) - dB_fixed(ue->frame_parms.ofdm_symbol_size);
+  // *rsrp_dBm = dB_fixed(*rsrp) + 30 - SQ15_SQUARED_NORM_FACTOR_DB
+  //     - ((int)openair0_cfg[0].rx_gain[0] - (int)openair0_cfg[0].rx_gain_offset[0]) - dB_fixed(ue->frame_parms.ofdm_symbol_size);
+  // *rsrp_dBm = dB_fixed(*rsrp);
+  // *rsrp_dBm = 35.84 * log(*rsrp) - 271.5;
+  *rsrp_dBm =  -141.0 + (97.0) * (log(*rsrp) - log(2000.0)) / (log(1120000.0) - log(2000.0));
+  if (*rsrp_dBm < -141.0) *rsrp_dBm = -141.0;
+  if (*rsrp_dBm > -44.0)  *rsrp_dBm = -44.0;
+  //  LOG_I(NR_PHY, "RSRP = %i (%i dBm)\n", *rsrp, *rsrp_dBm);
+
+  // printf(PHY, "cumul rsrp : %d , rsrp : %d \n", rsrp_sum, *rsrp_dBm );
 
 #ifdef NR_CSIRS_DEBUG
   LOG_I(NR_PHY, "RSRP = %i (%i dBm)\n", *rsrp, *rsrp_dBm);

@@ -123,8 +123,8 @@ size_t dump_mac_stats(gNB_MAC_INST *gNB, char *output, size_t strlen, bool reset
     NR_UE_sched_ctrl_t *sched_ctrl = &UE->UE_sched_ctrl;
     NR_mac_stats_t *stats = &UE->mac_stats;
     const int avg_rsrp = stats->num_rsrp_meas > 0 ? stats->cumul_rsrp / stats->num_rsrp_meas : 0;
-
-    output += snprintf(output, end - output, "UE RNTI %04x CU-UE-ID ", UE->rnti);
+    
+    output += snprintf(output, end - output,  "UE RNTI %04x CU-UE-ID ", UE->rnti);
     if (du_exists_f1_ue_data(UE->rnti)) {
       f1_ue_data_t ued = du_get_f1_ue_data(UE->rnti);
       output += snprintf(output, end - output, "%d", ued.secondary_ue);

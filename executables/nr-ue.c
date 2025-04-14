@@ -419,7 +419,7 @@ static void UE_synch(void *arg) {
   uint64_t dl_carrier, ul_carrier;
   NR_DL_FRAME_PARMS *fp = &UE->frame_parms;
   nr_initial_sync_t ret = {false, 0, 0};
-  if (UE->sl_mode == 2) {
+  if (UE->sl_mode == 2) { // ue is out of range of gnb
     fp = &UE->SL_UE_PHY_PARAMS.sl_frame_params;
     dl_carrier = fp->sl_CarrierFreq;
     ul_carrier = fp->sl_CarrierFreq;

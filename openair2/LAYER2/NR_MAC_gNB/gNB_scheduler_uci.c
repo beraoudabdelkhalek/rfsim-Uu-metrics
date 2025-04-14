@@ -501,6 +501,13 @@ static void evaluate_rsrp_report(gNB_MAC_INST *nrmac,
   // including ssb rsrp in mac stats
   stats->cumul_rsrp += rsrp_report->RSRP[0];
   stats->num_rsrp_meas++;
+
+  // LOG_I(NR_MAC,
+  //   "UE RNTI=0x%04x | New RSRP=%d | Total Meas=%d | Cumul RSRP=%d \n ",
+  //   UE->rnti,
+  //   rsrp_report->RSRP[0],
+  //   stats->num_rsrp_meas,
+  //   stats->cumul_rsrp);
 }
 
 static void evaluate_cri_report(uint8_t *payload, uint8_t cri_bitlen, int cumul_bits, NR_UE_sched_ctrl_t *sched_ctrl)

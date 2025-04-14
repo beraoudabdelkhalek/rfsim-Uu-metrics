@@ -556,7 +556,14 @@ static int rfsimu_setdistance_cmd(char *buff, int debug, telnet_printfunc_t prnt
 
     channel_desc_t *cd = b->channel_model;
     cd->channel_offset = new_offset;
+    if (distance <  0.5) {
+        cd->path_loss_dB = 30.0;
+    } else {
+      cd->path_loss_dB = 30.0 + 10.0 * 2 * log10(distance); //map distances from [ 0.5 - 4000 ] to path loss from [ 30 - 140 ]
+    }
+    prnt("path loss : %f \n", cd->path_loss_dB);
   }
+  
 
   free(modelname);
 
