@@ -16,16 +16,20 @@ The following repos will be used for each technology:
 - Run the broker on the host using the project inside `sidelink` directory.
 - Run UE 1 in ns1 (normal mode) using `normal-mode` directory:
 `sudo ~/normal-mode/rfsim-Uu-metrics/tools/script/multi-ue.sh -o 1`
+
 ```sudo ./nr-uesoftmodem -r 106 --numerology 1 --band 78 -C 3619200000 --rfsim --rfsimulator.serveraddr 10.201.1.100 --uicc0.imsi 001010000000001 -O ../../../ci-scripts/conf_files/nrue.uicc.conf --rfsimulator.options chanmod --telnetsrv --telnetsrv.listenport 9091```
 
 - Run UE2 in ns2 (sidelink mode) using `sidelink` directory:
 `sudo ~/normal-mode/rfsim-Uu-metrics/tools/script/multi-ue.sh -o 2`
+
 ```sudo RFSIMULATOR=server ./nr-uesoftmodem --rfsim -O ../../../targets/PROJECTS/NR-SIDELINK/CONF/sl_sync_ref.conf --sl-mode 2 --sa --sync-ref --brokerip 10.202.1.100```
 
 - Run UE 3 in ns3 (sidelink mode) using `sidelink` directory:
 `sudo ~/normal-mode/rfsim-Uu-metrics/tools/script/multi-ue.sh -o 3`
+
 ```sudo RFSIMULATOR=127.0.0.1 ./nr-uesoftmodem --rfsim -O ../../../targets/PROJECTS/NR-SIDELINK/CONF/sl_ue1.conf --sl-mode 2 --sa --brokerip 10.203.1.100 --device_id 1```
 
 - Run UE 4 in ns4 (normal mode) using `normal-mode` directory:
 `sudo ~/normal-mode/rfsim-Uu-metrics/tools/script/multi-ue.sh -o 4`
+
 ```sudo ./nr-uesoftmodem -r 106 --numerology 1 --band 78 -C 3619200000 --rfsim --rfsimulator.serveraddr 10.204.1.100 --uicc0.imsi 001010000000002 -O ../../../ci-scripts/conf_files/nrue.uicc.conf --rfsimulator.options chanmod --telnetsrv --telnetsrv.listenport 9091```
