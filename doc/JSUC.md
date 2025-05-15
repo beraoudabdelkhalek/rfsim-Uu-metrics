@@ -33,3 +33,15 @@ The following repos will be used for each technology:
 `sudo ~/normal-mode/rfsim-Uu-metrics/tools/script/multi-ue.sh -o 4`
 
 ```sudo ./nr-uesoftmodem -r 106 --numerology 1 --band 78 -C 3619200000 --rfsim --rfsimulator.serveraddr 10.204.1.100 --uicc0.imsi 001010000000002 -O ../../../ci-scripts/conf_files/nrue.uicc.conf --rfsimulator.options chanmod --telnetsrv --telnetsrv.listenport 9091```
+
+## Connectivity test
+
+### Uu Connectivity:
+From UE 1 ping UE 4:
+- `sudo ~/normal-mode/rfsim-Uu-metrics/tools/script/multi-ue.sh -o 1`
+- `ping 10.0.0.3`
+
+### Sidelink Connectivity:
+From UE 2 ping UE 3:
+- `sudo ~/normal-mode/rfsim-Uu-metrics/tools/script/multi-ue.sh -o 2`
+- `ping 10.0.0.2`
